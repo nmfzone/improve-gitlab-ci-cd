@@ -49,7 +49,7 @@ deploy_staging:
     name: staging
     url: ${DEPLOY_STAGING_URL}
   script:
-    - deploy_script
+    - ssh root@127.0.0.1 "your_deploy_script"
 
 deploy_production:
   only:
@@ -60,4 +60,4 @@ deploy_production:
     name: production
     url: ${DEPLOY_PRODUCTION_URL}
   script:
-    - deploy_script
+    - ssh root@127.0.0.1 "your_deploy_script"
