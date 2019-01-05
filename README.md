@@ -24,6 +24,10 @@ cache:
     - node_modules/
 ```
 
+By using this method, I just need to `build` the project one time (on the `ci_prepare` stage), then for subsequent stage I just need to re-use it.
+
+In my example, I've 2 tests stage that need Nuxt to be build first, to perform the test. So, instead I build the Nuxt in every stage (that each build needs ~6 minutes), I just need to create one stage named `ci_perepare`, then build once in that stage.
+
 ## Using slim docker image
 
 To improve the speed of Gitlab CI/CD, you should use slim docker image as much as possible.
