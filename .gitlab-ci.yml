@@ -1,0 +1,63 @@
+stages:
+  - prepare
+  - clean
+  - test
+  - e2e_test
+  - deploy_staging
+  - deploy_production
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .nuxt/
+    - build/
+    - .env
+    - .test.env
+    - node_modules/
+
+ci_prepare:
+  image: node:8.11.3-slim
+  stage: prepare
+  script:
+    - yarn
+    - yarn run build
+
+clean_code:
+  image: node:8.11.3-slim
+  stage: clean
+  script:
+    - yarn run lint
+
+unit_test:
+  image: alekzonder/puppeteer
+  stage: test
+  script:
+    - yarn test
+
+e2e_test:
+  image: alekzonder/puppeteer
+  stage: e2e_test
+  script:
+    - yarn test:e2e
+
+deploy_staging:
+  only:
+    - development
+  stage: deploy_staging
+  image: nmfzone/ssh-client-light
+  environment:
+    name: staging
+    url: ${DEPLOY_STAGING_URL}
+  script:
+    - deploy_script
+
+deploy_production:
+  only:
+    - master
+  stage: deploy_production
+  image: nmfzone/ssh-client-light
+  environment:
+    name: production
+    url: ${DEPLOY_PRODUCTION_URL}
+  script:
+    - deploy_script
