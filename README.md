@@ -12,7 +12,7 @@ Gitlab gives us ability to cache the files on each stage. So, in this example, I
 3. build (because I used Backpack, with my own server implementation)
 4. Others
 
-To achive this, you just need to add the cache config in your `.gitlab-ci.yml`.
+To achieve this, you just need to add the cache config in your `.gitlab-ci.yml`.
 ```
 cache:
   key: "$CI_COMMIT_REF_SLUG"
